@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Barra de Carregamento e História</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f1f1f1;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      display: flex;
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .story-container {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .story-box {
+      background-color: #f2f2f2;
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin-bottom: 20px;
+      min-height: 200px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      background-color: #e6e6e6;
+      height: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      background-color: #4caf50;
+      transition: width 0.5s;
+    }
+
+    /* Cores de progresso customizadas */
+    .progress-25 {
+      background-color: #ffc107;
+    }
+
+    .progress-50 {
+      background-color: #ff5722;
+    }
+
+    .progress-75 {
+      background-color: #f44336;
+    }
+
+    .chatbot-container {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #f2f2f2;
+      border-left: 1px solid #ccc;
+    }
+
+    .chatbot-header {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .chatbot-message {
+      margin-bottom: 10px;
+    }
+
+    .user-message {
+      text-align: right;
+    }
+
+    .chatbot-input {
+      margin-top: 20px;
+      display: flex;
+    }
+
+    .chatbot-input input {
+      flex: 1;
+      padding: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .chatbot-input button {
+      padding: 5px 10px;
+      margin-left: 10px;
+      border-radius: 5px;
+      border: none;
+      background-color: #4caf50;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .button-container button {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="story-container">
+      <div class="story-box">
+        <p id="story-text"></p>
+      </div>
+      <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+      </div>
+    </div>
+    <div class="chatbot-container">
+      <div class="chatbot-header">JEV</div>
+      <div id="chatbot-messages" class="chatbot-messages"></div>
+      <div class="chatbot-input">
+        <input type="text" id="user-input" placeholder="Pode perguntar Liz">
+        <button id="send-button">Enviar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const storyText = document.getElementById('story-text');
+    const progress = document.getElementById('progress');
+    const chatbotMessages = document.getElementById('chatbot-messages');
+    const userInput = document.getElementById('user-input');
+    const sendButton = document.getElementById('send-button');
+
+    let currentProgress = 0;
+
+    function incrementProgress() {
+      currentProgress += 2;
+      progress.style.width = currentProgress + '%';
+      updateProgressBarColor();
+    }
+
+    function updateProgressBarColor() {
+      if (currentProgress >= 75) {
+        progress.classList.add('progress-75');
+      } else if (currentProgress >= 50) {
+        progress.classList.add('progress-50');
+      } else if (currentProgress >= 25) {
+        progress.classList.add('progress-25');
+      }
+    }
+
+    function simulateLoading() {
+      if (currentProgress >= 100) {
+        return;
+      }
+
+      setTimeout(function() {
+        incrementProgress();
+        simulateLoading();
+      }, 7000); // Tempo atualmente definido para 2 segundos (2000 ms)
+    }
+
+    simulateLoading();
+
+    // Função para exibir partes da história conforme o progresso
+    function displayStoryPart() {
+      let storyPart = '';
+
+      if (currentProgress >= 2 && currentProgress < 4) {
+        storyPart = 'Oi, eu sou o Jev, bem, aqui é só a apresentação e logo terá mais atualizaçãos aqui, ele não pode mandar tudo de uma vez então vamos começar.';
+      } else if (currentProgress >= 4 && currentProgress < 6) {
+        storyPart = 'Eu posso responder algumas coisas por ele aqui do lado, porém apenas coisas simples, como, "oi" ou "como você está?" as vezes um "me conte algo".';
+      } else if (currentProgress >= 6 && currentProgress < 8) {
+        storyPart = 'Esse idiota deveria ele mesmo contar as coisas no lugar de perder tempo fazendo isso mas ele não consegue contar algumas coisas então fazer oque né? responderei po ele.';
+      } else if (currentProgress >= 8 && currentProgress < 10) {
+        storyPart = 'Não preste muita atenção aqui, eu vou ficar falando coisas aletórias, tipo aquela tela de inicialização do minecraft';
+      } else if (currentProgress >= 10  && currentProgress <12 ) {
+        storyPart = 'Proteja os pandas';
+      } else if (currentProgress >= 12 && currentProgress <14  ) {
+        storyPart = 'Viu? eu gosto de jogar Minecraft, talvez a gente jogue um dia';
+      }else if (currentProgress >= 14 && currentProgress <16  ) {
+        storyPart = 'Ou FF, nós deveriamos jogar';
+      }else if (currentProgress >= 16 && currentProgress <18  ) {
+        storyPart = 'Você já tomou água hoje?';
+      }else if (currentProgress >= 18 && currentProgress <20  ) {
+        storyPart = 'Nós deveriamos marcar uma viagem a Cadair Idris';
+      }else if (currentProgress >= 20 ) {
+        storyPart = 'Amo você';
+      }
+      storyText.textContent = storyPart;
+    }
+    // Atualiza a parte da história a cada mudança no progresso
+    progress.addEventListener('transitionend', displayStoryPart);
+
+    // Função para alterar a parte da história ao clicar em um botão
+    function changeStoryPart(partNumber) {
+      currentProgress = partNumber * 2;
+      progress.style.width = currentProgress + '%';
+      updateProgressBarColor();
+      displayStoryPart();
+    }
+
+    // Respostas pré-definidas do chatbot
+    const predefinedResponses = {
+      'olá': 'Olá! Como posso ajudar?',
+      'quem é você?': 'Eu sou o chatbot! Estou aqui para responder suas perguntas.',
+      'qual é o sentido da vida?': 'O sentido da vida pode variar para cada pessoa, mas muitos acreditam que é encontrar felicidade e propósito.',
+      'você é real?': 'Eu sou uma criação virtual, então não sou "real" como os seres humanos, mas estou aqui para ajudar!',
+      'obrigado': 'De nada! Estou aqui para ajudar sempre que precisar.',
+      'adeus': 'Até mais! Espero ter sido útil. Se precisar de mais alguma coisa, é só chamar.'
+    };
+
+    // Função para exibir mensagens do chatbot
+    function displayChatbotMessage(message, isUserMessage = false) {
+      const messageElement = document.createElement('div');
+      messageElement.classList.add('chatbot-message');
+      if (isUserMessage) {
+        messageElement.classList.add('user-message');
+      }
+      messageElement.textContent = message;
+      chatbotMessages.appendChild(messageElement);
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    }
+
+    // Função para lidar com o envio da pergunta do usuário
+    function handleUserInput() {
+      const userQuestion = userInput.value;
+      displayChatbotMessage(userQuestion, true);
+      const predefinedResponse = predefinedResponses[userQuestion.toLowerCase()];
+      if (predefinedResponse) {
+        displayChatbotMessage(predefinedResponse);
+      } else {
+        displayChatbotMessage('Desculpe, não entendi sua pergunta. Por favor, tente outra.');
+      }
+      userInput.value = '';
+    }
+
+    // Event listener para o botão de envio
+    sendButton.addEventListener('click', handleUserInput);
+
+    // Event listener para a tecla Enter no campo de input
+    userInput.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        handleUserInput();
+      }
+    });
+  </script>
+</body>
+</html>
