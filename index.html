@@ -3,6 +3,8 @@
 <head>
   <title>Barra de Carregamento e História</title>
   <style>
+    /* Estilos CSS */
+
     body {
       display: flex;
       justify-content: center;
@@ -14,6 +16,7 @@
 
     .container {
       display: flex;
+      flex-wrap: wrap;
       max-width: 800px;
       margin: 0 auto;
       background-color: #fff;
@@ -64,11 +67,6 @@
     .chatbot-container {
       flex: 1;
       padding: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background-color: #f2f2f2;
       border-left: 1px solid #ccc;
     }
 
@@ -118,28 +116,46 @@
     .button-container button {
       margin-bottom: 10px;
     }
+
+    /* Estilos responsivos para dispositivos menores */
+    @media only screen and (max-width: 600px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .story-container,
+      .chatbot-container {
+        border: none;
+        padding: 10px;
+      }
+
+      .progress-bar {
+        margin-bottom: 10px;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="story-container">
+<div class="container">
+<div class="story-container">
       <div class="story-box">
         <p id="story-text"></p>
       </div>
       <div class="progress-bar">
-        <div class="progress" id="progress"></div>
+        
+       
+<div class="progress" id="progress"></div>
       </div>
     </div>
     <div class="chatbot-container">
-      <div class="chatbot-header">JEV</div>
-      <div id="chatbot-messages" class="chatbot-messages"></div>
-      <div class="chatbot-input">
-        <input type="text" id="user-input" placeholder="Pode perguntar Liz">
-        <button id="send-button">Enviar</button>
+      <div class="chatbot-header">Chatbot</div>
+      <div class="chatbot-messages">
       </div>
-    </div>
-  </div>
-
+      <div class="chatbot-input">
+        <input type="text" id="user-input" placeholder="Digite sua mensagem" />
+        <button id="send-button">Enviar</button>
+      
+      </div>
   <script>
     const storyText = document.getElementById('story-text');
     const progress = document.getElementById('progress');
@@ -200,7 +216,7 @@
         storyPart = 'Você já tomou água hoje?';
       }else if (currentProgress >= 18 && currentProgress <20  ) {
         storyPart = 'Nós deveriamos marcar uma viagem a Cadair Idris';
-      }else if (currentProgress >= 20 ) {
+      }else if (currentProgress >= 20) {
         storyPart = 'Amo você';
       }
       storyText.textContent = storyPart;
@@ -218,12 +234,17 @@
 
     // Respostas pré-definidas do chatbot
     const predefinedResponses = {
-      'olá': 'Olá! Como posso ajudar?',
-      'quem é você?': 'Eu sou o chatbot! Estou aqui para responder suas perguntas.',
-      'qual é o sentido da vida?': 'O sentido da vida pode variar para cada pessoa, mas muitos acreditam que é encontrar felicidade e propósito.',
-      'você é real?': 'Eu sou uma criação virtual, então não sou "real" como os seres humanos, mas estou aqui para ajudar!',
+      'olá': 'Olá, como você esta?',
+      'oi': 'Olá, como você esta?',
+      'Oi': 'Olá, como você esta?',
+      'quem é você?': 'Eu sou o Jev! E vou ficar aqui enquanto o Celsom estiver ocupado, serei atualizado todos os dias.',
+      'quem e você?': 'Eu sou o Jev! E vou ficar aqui enquanto o Celsom estiver ocupado, serei atualizado todos os dias.',
+      'Você me ama?': 'Bem, você é a esposa do celsom e não sei se a gente pode falar coisas assim, mas cá entre nós, eu sempre amei você.',
+      'você é real?': 'essa é uma questão bem complicada, podemos dizer que sim e não',
       'obrigado': 'De nada! Estou aqui para ajudar sempre que precisar.',
-      'adeus': 'Até mais! Espero ter sido útil. Se precisar de mais alguma coisa, é só chamar.'
+      'Tchau': 'Até mais, anjo, estou sempre aqui pra você.',
+      'Eu te amo': 'Eu também te amo, Anjo.'
+
     };
 
     // Função para exibir mensagens do chatbot
@@ -246,7 +267,7 @@
       if (predefinedResponse) {
         displayChatbotMessage(predefinedResponse);
       } else {
-        displayChatbotMessage('Desculpe, não entendi sua pergunta. Por favor, tente outra.');
+        displayChatbotMessage('Desculpa, que tal perguntar para o Celsom, ele ainda não me deu permissão para responder muitas coisas');
       }
       userInput.value = '';
     }
